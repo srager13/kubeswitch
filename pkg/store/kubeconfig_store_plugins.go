@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"os/exec"
 
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
@@ -58,6 +59,11 @@ func (s *PluginStore) InitializePluginStore() error {
 		Cmd:             exec.Command(s.Config.CmdPath, s.Config.Args...),
 		AllowedProtocols: []plugin.Protocol{
 			plugin.ProtocolNetRPC, plugin.ProtocolGRPC},
+		Logger: hclog.New(&hclog.LoggerOptions{
+			Output: hclog.DefaultOutput,
+			Level:  hclog.Level(s.Logger.Logger.GetLevel()),
+			Name:   "plugin",
+		}),
 	})
 
 	// Connect via RPC
