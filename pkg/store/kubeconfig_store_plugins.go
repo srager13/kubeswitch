@@ -61,7 +61,7 @@ func (s *PluginStore) InitializePluginStore() error {
 			plugin.ProtocolNetRPC, plugin.ProtocolGRPC},
 		Logger: hclog.New(&hclog.LoggerOptions{
 			Output: hclog.DefaultOutput,
-			Level:  hclog.Level(s.Logger.Logger.GetLevel()),
+			Level:  hclog.LevelFromString(s.Logger.Logger.GetLevel().String()),
 			Name:   "plugin",
 		}),
 	})
